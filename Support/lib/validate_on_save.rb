@@ -6,7 +6,7 @@ $LOAD_PATH << ENV['TM_BUNDLE_SUPPORT'] + "/lib"
 require "validate_on_save/constantize"
 require "validate_on_save/defaults"
 require "validate_on_save/trim"
-require "validate_on_save/validators"
+# require "validate_on_save/validators"
 
 #
 # Internal constants
@@ -19,33 +19,36 @@ GROWL_BIN = ENV["TM_GROWLNOTIFY"] ||= ENV["TM_BUNDLE_SUPPORT"] + "/bin/growlnoti
 # Main VOS Class
 #
 
-class VOS
-  
+module VOS
+  SCOPES = {
+    :coffee =>   { :is => "source.coffee" },
+    :css =>      { :is => "source.css" },
+    :erb =>      { :is => ["text.html.ruby", "text.html source.ruby"] },
+    :erlang =>   { :is => "source.erlang" },
+    :haml =>     { :is => "text.haml" },
+    :js =>       { :is => ["source.js", "source.prototype.js"], :not => ["source.js.embedded.html"] },
+    :json =>     { :is => "source.json" },
+    :php =>      { :is => "source.php" },
+    :python =>   { :is => "source.python" },
+    :ruby =>     { :is => "source.ruby", :not => ["source.ruby.embedded", "source.ruby.embedded.haml", "text.html.ruby"] },
+    :sass =>     { :is => "source.sass" },
+  }.each_value {|lang| lang.each {|k,src| lang[k] = Regexp.union(src) } }
+
+  module Validate
+    def self.call(lang)
+      require "validate_on_save/validators/#{lang}"
+      send(lang)
+    end
+  end
+
   #
   # Main methods
   #
   
   def self.validate
     scope = ENV["TM_SCOPE"]
-    scopes = {
-      :coffeescript => { :is => /source\.coffee/ },
-      :css => { :is => /source\.css/ },
-      :erlang => { :is => /source\.erlang/ },
-      :haml => { :is => /text\.haml/ },
-      :javascript => { :is => /source\.js|source\.prototype\.js/, :not => /source\.js\.embedded\.html/ },
-      :php => { :is => /source\.php/ },
-      :python => { :is => /source\.python/ },
-      :erb => { :is => /text\.html\.ruby|text\.html source\.ruby/ },
-      :ruby => { :is => /source\.ruby/, :not => /source\.ruby\.embedded/|/source\.ruby\.embedded.haml/|/text\.html\.ruby/ },
-      :sass => { :is => /source\.sass/ },
-      :json => { :is => /source\.json/ }
-    }
-    scopes.each do |lang, match|
-      if scope =~ match[:is] && (!match.has_key?(:not) || !(scope =~ match[:not]))
-        Validate.send(lang)
-        break
-      end
-    end
+    lang = SCOPES.find([]) {|_,match| match[:is] =~ scope && !(match.key?(:not) && (match[:not] =~ scope)) }.first
+    Validate.(lang) if lang
   end
   
   def self.output(options = {})

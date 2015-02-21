@@ -1,4 +1,4 @@
-class VOS
+module VOS
   class Validate
     def self.json
       filename = ENV['TM_FILENAME']

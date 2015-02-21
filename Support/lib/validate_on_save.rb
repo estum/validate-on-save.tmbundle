@@ -44,13 +44,13 @@ module VOS
   #
   # Main methods
   #
-  
+
   def self.validate
     scope = ENV["TM_SCOPE"]
     lang = SCOPES.find([]) {|_,match| match[:is] =~ scope && !(match.key?(:not) && (match[:not] =~ scope)) }.first
     Validate.(lang) if lang
   end
-  
+
   def self.output(options = {})
     info = options[:info] ||= ""
     info = "" if !opt("VOS_VALIDATOR_INFO")
@@ -60,35 +60,49 @@ module VOS
     lang = options[:lang] ||= ""
     result_mod = options[:result_mod] ||= ""
 
-    if result =~ match_ok
+    if match_ok =~ result
       if !opt("VOS_ONLY_ON_ERROR")
-        puts info + "Syntax OK" if opt("VOS_TM_NOTIFY")
-        `"#{GROWL_BIN}" -p 'Low' -m 'Syntax OK' -n 'Textmate Syntax Check' -t "#{lang} Syntax Check" -a "Textmate"` if opt("VOS_GROWL")
+        notify lang, "Low", info + "Syntax OK"
       end
     else
       yield(result) if block_given?
-      puts info + result if opt("VOS_TM_NOTIFY")
-      `cat <<-EOT | "#{GROWL_BIN}" -p 'Emergency' -n 'Textmate Syntax Check' -t "#{lang} Syntax Check" -a "Textmate"
-      #{result}` if opt("VOS_GROWL")
+      notify lang, "Emergency", info + result
       TextMate.go_to :line => $1 if result =~ match_line && opt("VOS_JUMP_TO_ERROR")
     end
   end
-  
+
   #
   # Util methods
   #
-  
-  def self.opt(key)
-    if ENV.has_key?(key)
-      return (ENV[key] == "true") ? true : false
-    else
-      return key.constantize
+
+  class << self
+    def opt(key)
+      if ENV.has_key?(key)
+        return (ENV[key] == "true") ? true : false
+      else
+        return key.constantize
+      end
+    end
+
+    private
+    def notify(lang, priority, message)
+      tm_notify(message) if opt("VOS_TM_NOTIFY")
+      growl_notify(lang, priority, message) if opt("VOS_GROWL")
+    end
+
+    def tm_notify(message)
+      puts message
+    end
+
+    def growl_notify(lang, priority, message)
+      IO.popen "\"#{GROWL_BIN}\" -p '#{priority}' -n 'Textmate Syntax Check' -t '#{lang} Syntax Check' -a 'Textmate'", "w" do |io|
+        io.write message
+      end
+    end
+
+    def bugreport
+      require "#{ENV['TM_SUPPORT_PATH']}/lib/browser"
+      Browser.load_url('http://github.com/sxtxixtxcxh/validate-on-save.tmbundle/issues')
     end
   end
-  
-  def self.bugreport()
-    require "#{ENV['TM_SUPPORT_PATH']}/lib/browser"
-    Browser.load_url('http://github.com/sxtxixtxcxh/validate-on-save.tmbundle/issues')
-  end
-  
 end

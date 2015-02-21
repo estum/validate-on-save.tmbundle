@@ -3,22 +3,33 @@
 <plist version="1.0">
 <dict>
 	<key>beforeRunningCommand</key>
-	<string>saveActiveFile</string>
+	<string>nop</string>
 	<key>command</key>
-	<string>#!/usr/bin/env ruby
-require ENV['TM_BUNDLE_SUPPORT'] + "/lib/validate_on_save"
-VOS::Validate.ruby</string>
+	<string>#!/usr/bin/env ruby18
+
+require "#{ENV['TM_SUPPORT_PATH']}/lib/tm/detach"
+TextMate.detach do
+  %x{"#{ENV['TM_RUBY'] || 'ruby'}" -- "${TM_BUNDLE_SUPPORT}/bin/detached_validator.rb" ruby}
+end</string>
 	<key>input</key>
 	<string>document</string>
-	<key>keyEquivalent</key>
-	<string>@s</string>
+	<key>inputFormat</key>
+	<string>text</string>
 	<key>name</key>
 	<string>Validate Ruby</string>
-	<key>output</key>
-	<string>showAsTooltip</string>
+	<key>outputCaret</key>
+	<string>heuristic</string>
+	<key>outputFormat</key>
+	<string>text</string>
+	<key>outputLocation</key>
+	<string>discard</string>
 	<key>scope</key>
 	<string>source.ruby - source.ruby.embedded.haml - text.html.ruby</string>
+	<key>semanticClass</key>
+	<string>callback.document.did-save</string>
 	<key>uuid</key>
 	<string>83B5DB3E-BA86-41ED-9BDE-7E5B702E4123</string>
+	<key>version</key>
+	<integer>2</integer>
 </dict>
 </plist>

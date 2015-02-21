@@ -1,4 +1,4 @@
-class VOS
+module VOS
   class Validate
     def self.python
       py_validator = "#{ENV['TM_BUNDLE_SUPPORT']}/bin/python_validator.rb"

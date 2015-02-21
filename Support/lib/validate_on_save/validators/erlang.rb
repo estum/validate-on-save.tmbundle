@@ -1,4 +1,4 @@
-class VOS
+module VOS
   class Validate
     def self.erlang
       erlc_bin = ENV['TM_ERLC'] ||= "erlc"

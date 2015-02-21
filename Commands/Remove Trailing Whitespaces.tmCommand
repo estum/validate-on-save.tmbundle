@@ -3,20 +3,29 @@
 <plist version="1.0">
 <dict>
 	<key>beforeRunningCommand</key>
-	<string>nop</string>
+	<string>saveActiveFile</string>
 	<key>command</key>
 	<string>#!/usr/bin/env ruby
 require ENV['TM_BUNDLE_SUPPORT'] + "/lib/validate_on_save"
-VOS.trim</string>
+VOS.trim
+</string>
 	<key>fallbackInput</key>
 	<string>document</string>
 	<key>input</key>
 	<string>document</string>
+	<key>inputFormat</key>
+	<string>text</string>
 	<key>name</key>
 	<string>Remove Trailing Whitespaces</string>
-	<key>output</key>
+	<key>outputCaret</key>
+	<string>interpolateByLine</string>
+	<key>outputFormat</key>
+	<string>text</string>
+	<key>outputLocation</key>
 	<string>replaceDocument</string>
 	<key>uuid</key>
 	<string>82695383-E90D-4754-997C-67AEF28C5782</string>
+	<key>version</key>
+	<integer>2</integer>
 </dict>
 </plist>

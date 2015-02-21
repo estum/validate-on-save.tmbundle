@@ -1,4 +1,4 @@
-class VOS
+module VOS
   def self.trim
     document = STDIN.read
     document.gsub!(/(.*?)(\S+)[\t ]+$/s, "\\1\\2") if opt("VOS_TRIM_LINES")

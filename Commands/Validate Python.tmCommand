@@ -5,20 +5,31 @@
 	<key>beforeRunningCommand</key>
 	<string>saveActiveFile</string>
 	<key>command</key>
-	<string>#!/usr/bin/env ruby
-require ENV['TM_BUNDLE_SUPPORT'] + "/lib/validate_on_save"
-VOS::Validate.python</string>
+	<string>#!/usr/bin/env ruby18
+
+require "#{ENV['TM_SUPPORT_PATH']}/lib/tm/detach"
+TextMate.detach do
+  %x{"#{ENV['TM_RUBY'] || 'ruby'}" -- "${TM_BUNDLE_SUPPORT}/bin/detached_validator.rb" python}
+end</string>
 	<key>input</key>
 	<string>document</string>
-	<key>keyEquivalent</key>
-	<string>@s</string>
+	<key>inputFormat</key>
+	<string>text</string>
 	<key>name</key>
 	<string>Validate Python</string>
-	<key>output</key>
-	<string>showAsTooltip</string>
+	<key>outputCaret</key>
+	<string>afterOutput</string>
+	<key>outputFormat</key>
+	<string>text</string>
+	<key>outputLocation</key>
+	<string>toolTip</string>
 	<key>scope</key>
 	<string>source.python</string>
+	<key>semanticClass</key>
+	<string>callback.document.did-save</string>
 	<key>uuid</key>
 	<string>E1B0ADB9-99C8-4086-8248-70D2495B940D</string>
+	<key>version</key>
+	<integer>2</integer>
 </dict>
 </plist>

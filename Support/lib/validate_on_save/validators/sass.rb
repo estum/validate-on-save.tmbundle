@@ -1,5 +1,5 @@
 module VOS
-  class Validate
+  module Validate
     def self.sass
       compass_validator_bin = "#{ENV['TM_BUNDLE_SUPPORT']}/bin/compass_validator.rb"
       result = `"#{compass_validator_bin}"`

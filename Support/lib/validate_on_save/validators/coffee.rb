@@ -1,5 +1,5 @@
 module VOS
-  class Validate
+  module Validate
     def self.coffee
       binary = ENV['TM_COFFEESLINT'] ||= "coffeelint"
       filepath = ENV['TM_FILEPATH']

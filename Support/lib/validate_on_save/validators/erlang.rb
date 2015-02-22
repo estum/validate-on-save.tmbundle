@@ -1,5 +1,5 @@
 module VOS
-  class Validate
+  module Validate
     def self.erlang
       erlc_bin = ENV['TM_ERLC'] ||= "erlc"
       tmp = VOS.opt("VOS_ERL_OUTPUT_TO_TMP")

@@ -1,5 +1,5 @@
 module VOS
-  class Validate
+  module Validate
     def self.perl
       perl_bin = ENV['TM_PERL'] ||= "perl"
       VOS.output({

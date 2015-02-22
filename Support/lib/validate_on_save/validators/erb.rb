@@ -1,5 +1,5 @@
 module VOS
-  class Validate
+  module Validate
     def self.erb
       ruby_bin = ENV['TM_RUBY'] ||= "ruby"
       erb_bin = ENV["TM_ERB"] ||= "erb"

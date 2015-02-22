@@ -1,5 +1,5 @@
 module VOS
-  class Validate
+  module Validate
     def self.php
       php_bin = ENV['TM_PHP'] ||= "php"
       VOS.output({

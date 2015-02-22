@@ -22,7 +22,7 @@ end</string>
 	<key>outputFormat</key>
 	<string>text</string>
 	<key>outputLocation</key>
-	<string>discard</string>
+	<string>toolTip</string>
 	<key>scope</key>
 	<string>source.ruby - source.ruby.embedded.haml - text.html.ruby</string>
 	<key>semanticClass</key>

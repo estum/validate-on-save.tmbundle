@@ -1,5 +1,5 @@
 module VOS
-  class Validate
+  module Validate
     def self.python
       py_validator = "#{ENV['TM_BUNDLE_SUPPORT']}/bin/python_validator.rb"
       VOS.output({

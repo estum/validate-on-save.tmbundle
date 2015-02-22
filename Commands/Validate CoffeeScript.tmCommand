@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>beforeRunningCommand</key>
-	<string>saveActiveFile</string>
+	<string>nop</string>
 	<key>command</key>
 	<string>#!/usr/bin/env ruby18
 
@@ -18,7 +18,7 @@ end</string>
 	<key>name</key>
 	<string>Validate CoffeeScript</string>
 	<key>outputCaret</key>
-	<string>afterOutput</string>
+	<string>heuristic</string>
 	<key>outputFormat</key>
 	<string>text</string>
 	<key>outputLocation</key>

@@ -1,5 +1,5 @@
 module VOS
-  class Validate
+  module Validate
     def self.json
       filename = ENV['TM_FILENAME']
       filepath = ENV['TM_FILEPATH']

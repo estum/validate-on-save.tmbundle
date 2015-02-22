@@ -1,5 +1,5 @@
 module VOS
-  class Validate
+  module Validate
     def self.haml
       haml = ENV['TM_HAML'] ||= "haml"
       VOS.output({

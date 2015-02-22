@@ -1,6 +1,6 @@
 module VOS
-  class Validate
-    def self.javascript
+  module Validate
+    def self.js
       filename = ENV['TM_FILENAME']
       filepath = ENV['TM_FILEPATH']
       support  = ENV['TM_BUNDLE_SUPPORT']

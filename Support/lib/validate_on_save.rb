@@ -21,17 +21,17 @@ GROWL_BIN = ENV["TM_GROWLNOTIFY"] ||= ENV["TM_BUNDLE_SUPPORT"] + "/bin/growlnoti
 
 module VOS
   SCOPES = {
-    :coffee =>   { :is => "source.coffee" },
-    :css =>      { :is => "source.css" },
-    :erb =>      { :is => ["text.html.ruby", "text.html source.ruby"] },
-    :erlang =>   { :is => "source.erlang" },
-    :haml =>     { :is => "text.haml" },
-    :js =>       { :is => ["source.js", "source.prototype.js"], :not => ["source.js.embedded.html"] },
-    :json =>     { :is => "source.json" },
-    :php =>      { :is => "source.php" },
-    :python =>   { :is => "source.python" },
-    :ruby =>     { :is => "source.ruby", :not => ["source.ruby.embedded", "source.ruby.embedded.haml", "text.html.ruby"] },
-    :sass =>     { :is => "source.sass" },
+    :coffee  => { :is => "source.coffee" },
+    :css     => { :is => "source.css" },
+    :erb     => { :is => ["text.html.ruby", "text.html source.ruby"] },
+    :erlang  => { :is => "source.erlang" },
+    :haml    => { :is => "text.haml" },
+    :js      => { :is => ["source.js", "source.prototype.js"], :not => ["source.js.embedded.html"] },
+    :json    => { :is => "source.json" },
+    :php     => { :is => "source.php" },
+    :python  => { :is => "source.python" },
+    :ruby    => { :is => "source.ruby", :not => ["source.ruby.embedded", "source.ruby.embedded.haml", "text.html.ruby"] },
+    :sass    => { :is => "source.sass" },
   }.each_value {|lang| lang.each {|k,src| lang[k] = Regexp.union(src) } }
 
   module Validate
@@ -48,7 +48,7 @@ module VOS
   def self.validate
     scope = ENV["TM_SCOPE"]
     lang = SCOPES.find([]) {|_,match| match[:is] =~ scope && !(match.key?(:not) && (match[:not] =~ scope)) }.first
-    Validate.(lang) if lang
+    Validate.call(lang) if lang
   end
 
   def self.output(options = {})

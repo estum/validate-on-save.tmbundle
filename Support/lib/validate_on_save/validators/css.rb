@@ -1,5 +1,5 @@
 module VOS
-  class Validate
+  module Validate
     def self.css
       css_validator_bin = "#{ENV['TM_BUNDLE_SUPPORT']}/bin/css_validator.rb"
       VOS.output({
